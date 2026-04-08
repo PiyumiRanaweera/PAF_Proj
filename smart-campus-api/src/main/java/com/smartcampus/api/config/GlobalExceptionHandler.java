@@ -7,88 +7,53 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-/**
- * Global exception handler — returns consistent, meaningful error responses
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * Handle validation errors (400)
-     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationErrors(
-            MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        
+        // Get all error messages and join them nicely
+        String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .collect(Collectors.joining(". "));
+        
+        response.put("message", message);
+        
+        // Also provide field-specific details if the frontend wants them
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        response.put("errors", errors);
 
-        Map<String, String> fieldErrors = new HashMap<>();
-        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            fieldErrors.put(error.getField(), error.getDefaultMessage());
-        }
-
-        Map<String, Object> body = buildError(HttpStatus.BAD_REQUEST, "Validation failed", request.getRequestURI());
-        body.put("fieldErrors", fieldErrors);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * Handle ResponseStatusException (404, 403, 400, etc.)
-     */
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<Map<String, Object>> handleResponseStatusException(
-            ResponseStatusException ex, HttpServletRequest request) {
-
-        Map<String, Object> body = buildError(
-                HttpStatus.valueOf(ex.getStatus().value()),
-                ex.getReason(),
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(ex.getStatus()).body(body);
-    }
-
-    /**
-     * Handle Access Denied (403)
-     */
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, Object>> handleAccessDeniedException(
-            AccessDeniedException ex, HttpServletRequest request) {
-
-        Map<String, Object> body = buildError(
-                HttpStatus.FORBIDDEN,
-                "You do not have permission to access this resource",
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+    public ResponseEntity<Map<String, Object>> handleAccessDeniedException(AccessDeniedException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.FORBIDDEN.value());
+        response.put("message", "Access Denied: You do not have the required permissions (ADMIN).");
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 
-    /**
-     * Handle all other unexpected errors (500)
-     */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleAllExceptions(
-            Exception ex, HttpServletRequest request) {
-
-        Map<String, Object> body = buildError(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred",
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }
-
-    private Map<String, Object> buildError(HttpStatus status, String message, String path) {
-        Map<String, Object> body = new HashMap<>();
-        body.put("timestamp", LocalDateTime.now().toString());
-        body.put("status", status.value());
-        body.put("error", status.getReasonPhrase());
-        body.put("message", message);
-        body.put("path", path);
-        return body;
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeExceptions(RuntimeException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", HttpStatus.BAD_REQUEST.value());
+        response.put("message", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

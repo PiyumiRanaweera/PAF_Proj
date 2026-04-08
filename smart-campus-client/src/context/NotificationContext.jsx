@@ -58,7 +58,7 @@ export const NotificationProvider = ({ children }) => {
       const token = localStorage.getItem('accessToken');
       if (!token || token === 'mock_token_123') return;
 
-      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8085';
       const socket = new SockJS(`${API_BASE_URL}/ws?token=${token}`);
       
       stompClient = Stomp.over(socket);
