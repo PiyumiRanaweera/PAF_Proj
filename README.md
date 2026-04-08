@@ -131,6 +131,11 @@ A full-stack web platform for managing university facility bookings, maintenance
 | `PATCH` | `/api/resources/{id}/status` | Update only resource status | ADMIN |
 | `DELETE` | `/api/resources/{id}` | Delete resource from catalogue | ADMIN |
 
+### Member 1 Testing Evidence
+
+- Unit tests: `ResourceServiceTest` (business rules and validation)
+- Unit tests: `ResourceControllerTest` (endpoint status codes and request handling)
+
 ---
 
 ## 🔐 OAuth2 Flow
