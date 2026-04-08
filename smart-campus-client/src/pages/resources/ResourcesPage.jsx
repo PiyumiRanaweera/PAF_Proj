@@ -28,6 +28,7 @@ const ResourcesPage = () => {
   const [editingResource, setEditingResource] = useState(null);
   const [form, setForm] = useState(defaultForm);
   const [submitting, setSubmitting] = useState(false);
+  const [modalError, setModalError] = useState('');
 
   useEffect(() => {
     fetchResources();
@@ -68,6 +69,7 @@ const ResourcesPage = () => {
   const openCreateModal = () => {
     setEditingResource(null);
     setForm(defaultForm);
+    setModalError('');
     setIsModalOpen(true);
   };
 
@@ -83,11 +85,19 @@ const ResourcesPage = () => {
       status: resource.status || 'ACTIVE',
       description: resource.description || '',
     });
+    setModalError('');
     setIsModalOpen(true);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setModalError('');
+
+    if (!isValidTimeRange(form.availableFrom, form.availableTo)) {
+      setModalError('Available From must be earlier than Available To.');
+      return;
+    }
+
     setSubmitting(true);
 
     const payload = {
@@ -107,7 +117,7 @@ const ResourcesPage = () => {
       }
       setIsModalOpen(false);
     } catch (err) {
-      alert(err?.response?.data?.message || 'Failed to save resource');
+      setModalError(extractSaveError(err));
     } finally {
       setSubmitting(false);
     }
@@ -279,6 +289,8 @@ const ResourcesPage = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="modal-body">
+                {modalError && <div className="resource-form-error">{modalError}</div>}
+
                 <div className="form-group">
                   <label className="form-label">Name</label>
                   <input
@@ -412,6 +424,20 @@ function normalizeTime(value) {
 function formatTime(value) {
   if (!value) return '-';
   return value.slice(0, 5);
+}
+
+function isValidTimeRange(from, to) {
+  if (!from || !to) return true;
+  return normalizeTime(from) < normalizeTime(to);
+}
+
+function extractSaveError(err) {
+  const fieldErrors = err?.response?.data?.fieldErrors;
+  if (fieldErrors && typeof fieldErrors === 'object') {
+    const firstMessage = Object.values(fieldErrors)[0];
+    if (firstMessage) return String(firstMessage);
+  }
+  return err?.response?.data?.message || 'Failed to save resource';
 }
 
 export default ResourcesPage;

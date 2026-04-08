@@ -1,0 +1,192 @@
+{
+  "info": {
+    "name": "Member 1 - Facilities and Resources API",
+    "description": "Postman collection for Module A endpoints implemented by Member 1.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "jwtToken",
+      "value": ""
+    },
+    {
+      "key": "resourceId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Public - List/Search Resources",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/resources?type=LAB&status=ACTIVE&location=Engineering&minCapacity=20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources"
+          ],
+          "query": [
+            {
+              "key": "type",
+              "value": "LAB"
+            },
+            {
+              "key": "status",
+              "value": "ACTIVE"
+            },
+            {
+              "key": "location",
+              "value": "Engineering"
+            },
+            {
+              "key": "minCapacity",
+              "value": "20"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Public - Get Resource By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/resources/{{resourceId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources",
+            "{{resourceId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Create Resource",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwtToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Digital Media Lab\",\n  \"type\": \"LAB\",\n  \"capacity\": 30,\n  \"location\": \"Engineering Block - Level 3\",\n  \"availableFrom\": \"08:30:00\",\n  \"availableTo\": \"17:30:00\",\n  \"status\": \"ACTIVE\",\n  \"description\": \"High-end multimedia systems for student projects.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resources",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Update Resource",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwtToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Digital Media Lab - Updated\",\n  \"type\": \"LAB\",\n  \"capacity\": 32,\n  \"location\": \"Engineering Block - Level 3\",\n  \"availableFrom\": \"09:00:00\",\n  \"availableTo\": \"18:00:00\",\n  \"status\": \"ACTIVE\",\n  \"description\": \"Updated availability and capacity.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resources/{{resourceId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources",
+            "{{resourceId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Update Resource Status",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwtToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"OUT_OF_SERVICE\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/resources/{{resourceId}}/status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources",
+            "{{resourceId}}",
+            "status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Admin - Delete Resource",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwtToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/resources/{{resourceId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources",
+            "{{resourceId}}"
+          ]
+        }
+      }
+    }
+  ]
+}

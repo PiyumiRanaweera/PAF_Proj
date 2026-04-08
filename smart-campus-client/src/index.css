@@ -663,6 +663,15 @@ input, select, textarea { font-family: inherit; }
   font-size: 0.88rem;
 }
 
+.resource-form-error {
+  background: rgba(239,68,68,0.14);
+  border: 1px solid rgba(239,68,68,0.32);
+  color: #fca5a5;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+
 .resource-name-cell {
   display: flex;
   flex-direction: column;

@@ -135,6 +135,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 
 - Unit tests: `ResourceServiceTest` (business rules and validation)
 - Unit tests: `ResourceControllerTest` (endpoint status codes and request handling)
+- Postman collection: `smart-campus-api/postman/member1-resources.postman_collection.json`
 
 ---
 
