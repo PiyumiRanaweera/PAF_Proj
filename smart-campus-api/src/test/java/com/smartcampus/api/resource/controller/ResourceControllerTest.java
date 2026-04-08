@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.*;
@@ -51,6 +52,17 @@ class ResourceControllerTest {
                 .status(ResourceStatus.ACTIVE)
                 .description("Projector available")
                 .build();
+    }
+
+    @Test
+    @DisplayName("GET /api/resources/metadata should return resource enums")
+    void getResourceMetadataShouldReturnEnums() {
+        ResponseEntity<Map<String, List<String>>> response = resourceController.getResourceMetadata();
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().get("types")).contains("LECTURE_HALL", "LAB");
+        assertThat(response.getBody().get("statuses")).contains("ACTIVE", "OUT_OF_SERVICE");
     }
 
     @Test

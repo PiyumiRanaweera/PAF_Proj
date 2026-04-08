@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { resourceApi } from '../../api/resourceApi';
 import { useAuth } from '../../context/AuthContext';
 
-const RESOURCE_TYPES = ['LECTURE_HALL', 'LAB', 'MEETING_ROOM', 'EQUIPMENT'];
-const RESOURCE_STATUS = ['ACTIVE', 'OUT_OF_SERVICE'];
+const DEFAULT_RESOURCE_TYPES = ['LECTURE_HALL', 'LAB', 'MEETING_ROOM', 'EQUIPMENT'];
+const DEFAULT_RESOURCE_STATUS = ['ACTIVE', 'OUT_OF_SERVICE'];
 
 const defaultForm = {
   name: '',
@@ -21,6 +21,8 @@ const ResourcesPage = () => {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [resourceTypes, setResourceTypes] = useState(DEFAULT_RESOURCE_TYPES);
+  const [resourceStatuses, setResourceStatuses] = useState(DEFAULT_RESOURCE_STATUS);
 
   const [filters, setFilters] = useState({ name: '', type: '', status: '', location: '', minCapacity: '' });
 
@@ -31,8 +33,27 @@ const ResourcesPage = () => {
   const [modalError, setModalError] = useState('');
 
   useEffect(() => {
+    fetchMetadata();
     fetchResources();
   }, []);
+
+  const fetchMetadata = async () => {
+    try {
+      const res = await resourceApi.getMetadata();
+      const types = Array.isArray(res?.data?.types) && res.data.types.length > 0
+        ? res.data.types
+        : DEFAULT_RESOURCE_TYPES;
+      const statuses = Array.isArray(res?.data?.statuses) && res.data.statuses.length > 0
+        ? res.data.statuses
+        : DEFAULT_RESOURCE_STATUS;
+
+      setResourceTypes(types);
+      setResourceStatuses(statuses);
+    } catch (_err) {
+      setResourceTypes(DEFAULT_RESOURCE_TYPES);
+      setResourceStatuses(DEFAULT_RESOURCE_STATUS);
+    }
+  };
 
   const fetchResources = async (appliedFilters = {}) => {
     try {
@@ -182,7 +203,7 @@ const ResourcesPage = () => {
             onChange={(e) => setFilters((prev) => ({ ...prev, type: e.target.value }))}
           >
             <option value="">All Types</option>
-            {RESOURCE_TYPES.map((type) => (
+            {resourceTypes.map((type) => (
               <option key={type} value={type}>{prettyEnum(type)}</option>
             ))}
           </select>
@@ -196,7 +217,7 @@ const ResourcesPage = () => {
             onChange={(e) => setFilters((prev) => ({ ...prev, status: e.target.value }))}
           >
             <option value="">All Statuses</option>
-            {RESOURCE_STATUS.map((status) => (
+            {resourceStatuses.map((status) => (
               <option key={status} value={status}>{prettyEnum(status)}</option>
             ))}
           </select>
@@ -319,7 +340,7 @@ const ResourcesPage = () => {
                       value={form.type}
                       onChange={(e) => setForm((prev) => ({ ...prev, type: e.target.value }))}
                     >
-                      {RESOURCE_TYPES.map((type) => (
+                      {resourceTypes.map((type) => (
                         <option key={type} value={type}>{prettyEnum(type)}</option>
                       ))}
                     </select>
@@ -378,7 +399,7 @@ const ResourcesPage = () => {
                       value={form.status}
                       onChange={(e) => setForm((prev) => ({ ...prev, status: e.target.value }))}
                     >
-                      {RESOURCE_STATUS.map((status) => (
+                      {resourceStatuses.map((status) => (
                         <option key={status} value={status}>{prettyEnum(status)}</option>
                       ))}
                     </select>

@@ -20,6 +20,24 @@
   ],
   "item": [
     {
+      "name": "Public - Resource Metadata",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/resources/metadata",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "resources",
+            "metadata"
+          ]
+        }
+      }
+    },
+    {
       "name": "Public - List/Search Resources",
       "request": {
         "method": "GET",

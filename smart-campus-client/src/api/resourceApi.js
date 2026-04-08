@@ -1,6 +1,19 @@
 import axiosInstance from './axiosInstance';
 
 export const resourceApi = {
+  // GET /api/resources/metadata
+  getMetadata: () => {
+    if (localStorage.getItem('accessToken') === 'mock_token_123') {
+      return Promise.resolve({
+        data: {
+          types: ['LECTURE_HALL', 'LAB', 'MEETING_ROOM', 'EQUIPMENT'],
+          statuses: ['ACTIVE', 'OUT_OF_SERVICE'],
+        },
+      });
+    }
+    return axiosInstance.get('/api/resources/metadata');
+  },
+
   // GET /api/resources
   getAll: (params = {}) => {
     if (localStorage.getItem('accessToken') === 'mock_token_123') {

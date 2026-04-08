@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Facilities and assets catalogue endpoints.
@@ -28,6 +31,24 @@ import java.util.List;
 public class ResourceController {
 
     private final ResourceService resourceService;
+
+        /**
+         * GET /api/resources/metadata
+         */
+        @GetMapping("/metadata")
+        public ResponseEntity<Map<String, List<String>>> getResourceMetadata() {
+        List<String> types = Arrays.stream(ResourceType.values())
+            .map(Enum::name)
+            .collect(Collectors.toList());
+        List<String> statuses = Arrays.stream(ResourceStatus.values())
+            .map(Enum::name)
+            .collect(Collectors.toList());
+
+        return ResponseEntity.ok(Map.of(
+            "types", types,
+            "statuses", statuses
+        ));
+        }
 
     /**
      * GET /api/resources?type=&status=&name=&location=&minCapacity=
