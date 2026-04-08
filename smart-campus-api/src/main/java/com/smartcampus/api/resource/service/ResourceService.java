@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,18 @@ public class ResourceService {
             ResourceStatus status,
             String name,
             String location,
-            Integer minCapacity
+            Integer minCapacity,
+            String sortBy,
+            String sortDir
     ) {
         String cleanedName = normalizeOptional(name);
         String cleanedLocation = normalizeOptional(location);
 
+        Comparator<Resource> comparator = buildComparator(sortBy, sortDir);
+
         return resourceRepository.searchResources(type, status, cleanedName, cleanedLocation, minCapacity)
                 .stream()
+            .sorted(comparator)
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
@@ -122,6 +128,34 @@ public class ResourceService {
         }
         String trimmed = value.trim();
         return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private Comparator<Resource> buildComparator(String sortBy, String sortDir) {
+        String sortByValue = sortBy == null ? "createdAt" : sortBy.trim().toLowerCase();
+        String sortDirValue = sortDir == null ? "desc" : sortDir.trim().toLowerCase();
+
+        Comparator<Resource> comparator;
+        switch (sortByValue) {
+            case "name":
+                comparator = Comparator.comparing(r -> r.getName().toLowerCase());
+                break;
+            case "capacity":
+                comparator = Comparator.comparing(Resource::getCapacity);
+                break;
+            case "location":
+                comparator = Comparator.comparing(r -> r.getLocation().toLowerCase());
+                break;
+            default:
+                comparator = Comparator.comparing(Resource::getCreatedAt,
+                        Comparator.nullsLast(Comparator.naturalOrder()));
+                break;
+        }
+
+        if ("desc".equals(sortDirValue)) {
+            comparator = comparator.reversed();
+        }
+
+        return comparator;
     }
 
     private ResourceDTO mapToDTO(Resource resource) {

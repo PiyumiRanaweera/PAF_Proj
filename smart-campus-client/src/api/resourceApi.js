@@ -61,6 +61,32 @@ export const resourceApi = {
         filtered = filtered.filter((r) => r.capacity >= Number(params.minCapacity));
       }
 
+      const sortBy = (params.sortBy || 'createdAt').toLowerCase();
+      const sortDir = (params.sortDir || 'desc').toLowerCase();
+
+      filtered.sort((a, b) => {
+        let aValue;
+        let bValue;
+
+        if (sortBy === 'name') {
+          aValue = (a.name || '').toLowerCase();
+          bValue = (b.name || '').toLowerCase();
+        } else if (sortBy === 'capacity') {
+          aValue = Number(a.capacity || 0);
+          bValue = Number(b.capacity || 0);
+        } else if (sortBy === 'location') {
+          aValue = (a.location || '').toLowerCase();
+          bValue = (b.location || '').toLowerCase();
+        } else {
+          aValue = new Date(a.createdAt || 0).getTime();
+          bValue = new Date(b.createdAt || 0).getTime();
+        }
+
+        if (aValue < bValue) return sortDir === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+      });
+
       return Promise.resolve({ data: filtered });
     }
 

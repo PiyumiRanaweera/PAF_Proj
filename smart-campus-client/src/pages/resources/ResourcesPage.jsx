@@ -24,7 +24,15 @@ const ResourcesPage = () => {
   const [resourceTypes, setResourceTypes] = useState(DEFAULT_RESOURCE_TYPES);
   const [resourceStatuses, setResourceStatuses] = useState(DEFAULT_RESOURCE_STATUS);
 
-  const [filters, setFilters] = useState({ name: '', type: '', status: '', location: '', minCapacity: '' });
+  const [filters, setFilters] = useState({
+    name: '',
+    type: '',
+    status: '',
+    location: '',
+    minCapacity: '',
+    sortBy: 'createdAt',
+    sortDir: 'desc',
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingResource, setEditingResource] = useState(null);
@@ -82,7 +90,15 @@ const ResourcesPage = () => {
   };
 
   const handleResetFilters = () => {
-    const reset = { name: '', type: '', status: '', location: '', minCapacity: '' };
+    const reset = {
+      name: '',
+      type: '',
+      status: '',
+      location: '',
+      minCapacity: '',
+      sortBy: 'createdAt',
+      sortDir: 'desc',
+    };
     setFilters(reset);
     fetchResources(reset);
   };
@@ -242,6 +258,32 @@ const ResourcesPage = () => {
             value={filters.minCapacity}
             onChange={(e) => setFilters((prev) => ({ ...prev, minCapacity: e.target.value }))}
           />
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Sort By</label>
+          <select
+            className="form-select"
+            value={filters.sortBy}
+            onChange={(e) => setFilters((prev) => ({ ...prev, sortBy: e.target.value }))}
+          >
+            <option value="createdAt">Created Date</option>
+            <option value="name">Name</option>
+            <option value="capacity">Capacity</option>
+            <option value="location">Location</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label className="form-label">Direction</label>
+          <select
+            className="form-select"
+            value={filters.sortDir}
+            onChange={(e) => setFilters((prev) => ({ ...prev, sortDir: e.target.value }))}
+          >
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
         </div>
 
         <div className="resource-filter-actions">

@@ -125,7 +125,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
 | `GET` | `/api/resources/metadata` | Get valid resource types and statuses | Public |
-| `GET` | `/api/resources` | List/search resources (type, status, location, minCapacity) | Public |
+| `GET` | `/api/resources` | List/search resources (name, type, status, location, minCapacity, sortBy, sortDir) | Public |
 | `GET` | `/api/resources/{id}` | Get one resource by ID | Public |
 | `POST` | `/api/resources` | Create new resource | ADMIN |
 | `PUT` | `/api/resources/{id}` | Update full resource details | ADMIN |

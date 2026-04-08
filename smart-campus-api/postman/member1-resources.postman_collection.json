@@ -43,7 +43,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/resources?name=Lab&type=LAB&status=ACTIVE&location=Engineering&minCapacity=20",
+          "raw": "{{baseUrl}}/api/resources?name=Lab&type=LAB&status=ACTIVE&location=Engineering&minCapacity=20&sortBy=name&sortDir=asc",
           "host": [
             "{{baseUrl}}"
           ],
@@ -71,6 +71,14 @@
             {
               "key": "minCapacity",
               "value": "20"
+            },
+            {
+              "key": "sortBy",
+              "value": "name"
+            },
+            {
+              "key": "sortDir",
+              "value": "asc"
             }
           ]
         }

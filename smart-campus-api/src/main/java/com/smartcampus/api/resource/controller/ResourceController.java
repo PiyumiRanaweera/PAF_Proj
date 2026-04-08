@@ -51,7 +51,7 @@ public class ResourceController {
         }
 
     /**
-     * GET /api/resources?type=&status=&name=&location=&minCapacity=
+     * GET /api/resources?type=&status=&name=&location=&minCapacity=&sortBy=&sortDir=
      */
     @GetMapping
     public ResponseEntity<List<ResourceDTO>> getAllResources(
@@ -59,9 +59,11 @@ public class ResourceController {
             @RequestParam(required = false) ResourceStatus status,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String location,
-            @RequestParam(required = false) @Min(value = 1, message = "minCapacity must be at least 1") Integer minCapacity
+            @RequestParam(required = false) @Min(value = 1, message = "minCapacity must be at least 1") Integer minCapacity,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir
     ) {
-        return ResponseEntity.ok(resourceService.getAllResources(type, status, name, location, minCapacity));
+        return ResponseEntity.ok(resourceService.getAllResources(type, status, name, location, minCapacity, sortBy, sortDir));
     }
 
     /**
