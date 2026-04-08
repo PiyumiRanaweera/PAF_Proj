@@ -1,0 +1,132 @@
+.create-ticket-btn {
+  box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+}
+
+.create-ticket-btn:hover {
+  box-shadow: 0 6px 20px rgba(99,102,241,0.5);
+}
+
+.tickets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ticket-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.ticket-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  background: var(--bg-card-hover);
+}
+
+.ticket-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.ticket-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.ticket-id {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-light);
+  background: rgba(99,102,241,0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.ticket-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ticket-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.ticket-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ticket-priority {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.priority-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: 0.02em;
+}
+
+.status-badge.open {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-badge.in-progress {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-badge.resolved {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.ticket-actions {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
