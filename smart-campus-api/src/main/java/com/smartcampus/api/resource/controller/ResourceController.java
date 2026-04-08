@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/resources")
 @RequiredArgsConstructor
+@Validated
 public class ResourceController {
 
     private final ResourceService resourceService;
@@ -34,7 +37,7 @@ public class ResourceController {
             @RequestParam(required = false) ResourceType type,
             @RequestParam(required = false) ResourceStatus status,
             @RequestParam(required = false) String location,
-            @RequestParam(required = false) Integer minCapacity
+            @RequestParam(required = false) @Min(value = 1, message = "minCapacity must be at least 1") Integer minCapacity
     ) {
         return ResponseEntity.ok(resourceService.getAllResources(type, status, location, minCapacity));
     }
