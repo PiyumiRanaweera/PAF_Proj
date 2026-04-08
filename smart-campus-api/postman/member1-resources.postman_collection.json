@@ -25,7 +25,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/resources?type=LAB&status=ACTIVE&location=Engineering&minCapacity=20",
+          "raw": "{{baseUrl}}/api/resources?name=Lab&type=LAB&status=ACTIVE&location=Engineering&minCapacity=20",
           "host": [
             "{{baseUrl}}"
           ],
@@ -34,6 +34,10 @@
             "resources"
           ],
           "query": [
+            {
+              "key": "name",
+              "value": "Lab"
+            },
             {
               "key": "type",
               "value": "LAB"

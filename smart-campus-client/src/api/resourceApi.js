@@ -36,6 +36,10 @@ export const resourceApi = {
       let filtered = [...mockData];
       if (params.type) filtered = filtered.filter((r) => r.type === params.type);
       if (params.status) filtered = filtered.filter((r) => r.status === params.status);
+      if (params.name) {
+        const nameQuery = params.name.toLowerCase();
+        filtered = filtered.filter((r) => r.name.toLowerCase().includes(nameQuery));
+      }
       if (params.location) {
         const q = params.location.toLowerCase();
         filtered = filtered.filter((r) => r.location.toLowerCase().includes(q));

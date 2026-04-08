@@ -30,16 +30,17 @@ public class ResourceController {
     private final ResourceService resourceService;
 
     /**
-     * GET /api/resources?type=&status=&location=&minCapacity=
+     * GET /api/resources?type=&status=&name=&location=&minCapacity=
      */
     @GetMapping
     public ResponseEntity<List<ResourceDTO>> getAllResources(
             @RequestParam(required = false) ResourceType type,
             @RequestParam(required = false) ResourceStatus status,
+            @RequestParam(required = false) String name,
             @RequestParam(required = false) String location,
             @RequestParam(required = false) @Min(value = 1, message = "minCapacity must be at least 1") Integer minCapacity
     ) {
-        return ResponseEntity.ok(resourceService.getAllResources(type, status, location, minCapacity));
+        return ResponseEntity.ok(resourceService.getAllResources(type, status, name, location, minCapacity));
     }
 
     /**

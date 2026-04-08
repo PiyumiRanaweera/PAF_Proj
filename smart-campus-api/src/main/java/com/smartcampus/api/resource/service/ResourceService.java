@@ -26,8 +26,17 @@ public class ResourceService {
 
     private final ResourceRepository resourceRepository;
 
-    public List<ResourceDTO> getAllResources(ResourceType type, ResourceStatus status, String location, Integer minCapacity) {
-        return resourceRepository.searchResources(type, status, location, minCapacity)
+    public List<ResourceDTO> getAllResources(
+            ResourceType type,
+            ResourceStatus status,
+            String name,
+            String location,
+            Integer minCapacity
+    ) {
+        String cleanedName = normalizeOptional(name);
+        String cleanedLocation = normalizeOptional(location);
+
+        return resourceRepository.searchResources(type, status, cleanedName, cleanedLocation, minCapacity)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
@@ -105,6 +114,14 @@ public class ResourceService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "availableFrom must be before availableTo");
         }
+    }
+
+    private String normalizeOptional(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
     }
 
     private ResourceDTO mapToDTO(Resource resource) {

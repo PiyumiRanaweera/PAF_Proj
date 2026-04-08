@@ -56,11 +56,11 @@ class ResourceControllerTest {
     @Test
     @DisplayName("GET /api/resources should return filtered list")
     void getAllResourcesShouldReturnList() {
-        when(resourceService.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "Main", 100))
+        when(resourceService.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "A401", "Main", 100))
                 .thenReturn(List.of(resourceDTO));
 
         ResponseEntity<List<ResourceDTO>> response =
-                resourceController.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "Main", 100);
+            resourceController.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "A401", "Main", 100);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).hasSize(1);

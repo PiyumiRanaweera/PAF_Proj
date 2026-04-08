@@ -22,7 +22,7 @@ const ResourcesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const [filters, setFilters] = useState({ type: '', status: '', location: '', minCapacity: '' });
+  const [filters, setFilters] = useState({ name: '', type: '', status: '', location: '', minCapacity: '' });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingResource, setEditingResource] = useState(null);
@@ -61,7 +61,7 @@ const ResourcesPage = () => {
   };
 
   const handleResetFilters = () => {
-    const reset = { type: '', status: '', location: '', minCapacity: '' };
+    const reset = { name: '', type: '', status: '', location: '', minCapacity: '' };
     setFilters(reset);
     fetchResources(reset);
   };
@@ -164,6 +164,16 @@ const ResourcesPage = () => {
       </div>
 
       <div className="resource-filters">
+        <div className="form-group">
+          <label className="form-label">Name</label>
+          <input
+            className="resource-input"
+            placeholder="e.g., A401"
+            value={filters.name}
+            onChange={(e) => setFilters((prev) => ({ ...prev, name: e.target.value }))}
+          />
+        </div>
+
         <div className="form-group">
           <label className="form-label">Type</label>
           <select

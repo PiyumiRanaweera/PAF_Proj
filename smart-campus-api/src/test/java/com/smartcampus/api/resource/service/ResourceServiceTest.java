@@ -56,10 +56,10 @@ class ResourceServiceTest {
     @Test
     @DisplayName("Should return filtered resources")
     void shouldReturnFilteredResources() {
-        when(resourceRepository.searchResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "Main", 100))
+        when(resourceRepository.searchResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "A401", "Main", 100))
                 .thenReturn(List.of(resource));
 
-        var result = resourceService.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "Main", 100);
+        var result = resourceService.getAllResources(ResourceType.LECTURE_HALL, ResourceStatus.ACTIVE, "A401", "Main", 100);
 
         assertThat(result).hasSize(1);
         assertThat(result.get(0).getName()).isEqualTo("A401 Lecture Hall");
