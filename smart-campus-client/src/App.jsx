@@ -11,6 +11,12 @@ import NotificationsPage from './pages/notifications/NotificationsPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
 import { useAuth } from './context/AuthContext';
 
+// Module B — Booking Management
+import BookingRequestPage from './pages/bookings/BookingRequestPage';
+import MyBookingsPage from './pages/bookings/MyBookingsPage';
+import AdminBookingsPage from './pages/admin/AdminBookingsPage';
+import AdminResourcesPage from './pages/admin/AdminResourcesPage';
+
 const AppLayout = ({ children }) => {
   const { user } = useAuth();
   return (
@@ -39,11 +45,17 @@ const App = () => {
 
               {/* Admin only */}
               <Route path="/admin/users" element={<ProtectedRoute requiredRole="ADMIN"><AdminUsersPage /></ProtectedRoute>} />
+              <Route path="/admin/bookings" element={<ProtectedRoute requiredRole="ADMIN"><AdminBookingsPage /></ProtectedRoute>} />
+              <Route path="/admin/resources" element={<ProtectedRoute requiredRole="ADMIN"><AdminResourcesPage /></ProtectedRoute>} />
 
               {/* Placeholder routes for other modules */}
-              <Route path="/resources/*" element={<ProtectedRoute><PlaceholderPage title="Resources" icon="🏢" /></ProtectedRoute>} />
-              <Route path="/bookings/*" element={<ProtectedRoute><PlaceholderPage title="Bookings" icon="📅" /></ProtectedRoute>} />
+              <Route path="/resources" element={<ProtectedRoute><PlaceholderPage title="Resource Catalog" icon="🏢" /></ProtectedRoute>} />
               <Route path="/tickets/*" element={<ProtectedRoute><PlaceholderPage title="Tickets" icon="🔧" /></ProtectedRoute>} />
+
+              {/* Module B — Booking Management routes */}
+              <Route path="/bookings/new" element={<ProtectedRoute><BookingRequestPage /></ProtectedRoute>} />
+              <Route path="/bookings/my" element={<ProtectedRoute><MyBookingsPage /></ProtectedRoute>} />
+              <Route path="/bookings" element={<ProtectedRoute><MyBookingsPage /></ProtectedRoute>} />
 
               {/* Default */}
               <Route path="/" element={<Navigate to="/dashboard" replace />} />

@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       notificationTicketEnabled: true,
       notificationCommentEnabled: true,
     };
-    localStorage.setItem('accessToken', 'mock_token_123');
+    localStorage.setItem('accessToken', isAdminAccess ? 'mock_token_admin' : 'mock_token_123');
     localStorage.setItem('user', JSON.stringify(mockUser));
     setUser(mockUser);
   }, []);

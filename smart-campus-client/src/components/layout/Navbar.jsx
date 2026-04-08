@@ -34,7 +34,13 @@ const Navbar = () => {
     { to: '/resources', label: 'Resources', icon: '🏢' },
     { to: '/bookings', label: 'Bookings', icon: '📅' },
     { to: '/tickets', label: 'Tickets', icon: '🔧' },
-    ...(isAdmin() ? [{ to: '/admin/users', label: 'Users', icon: '👥' }] : []),
+    ...(isAdmin()
+      ? [
+          { to: '/admin/users', label: 'Users', icon: '👥' },
+          { to: '/admin/bookings', label: 'Manage Bookings', icon: '📋' },
+          { to: '/admin/resources', label: 'Manage Resources', icon: '🛠️' },
+        ]
+      : []),
   ];
 
   return (
