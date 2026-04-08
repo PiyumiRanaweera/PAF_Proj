@@ -120,6 +120,19 @@ A full-stack web platform for managing university facility bookings, maintenance
 
 ---
 
+## 🏢 Member 1 – Module A Endpoints (Facilities & Assets Catalogue)
+
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `GET` | `/api/resources` | List/search resources (type, status, location, minCapacity) | Public |
+| `GET` | `/api/resources/{id}` | Get one resource by ID | Public |
+| `POST` | `/api/resources` | Create new resource | ADMIN |
+| `PUT` | `/api/resources/{id}` | Update full resource details | ADMIN |
+| `PATCH` | `/api/resources/{id}/status` | Update only resource status | ADMIN |
+| `DELETE` | `/api/resources/{id}` | Delete resource from catalogue | ADMIN |
+
+---
+
 ## 🔐 OAuth2 Flow
 
 ```
