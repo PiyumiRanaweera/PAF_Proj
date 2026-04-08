@@ -13,7 +13,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 | Member 1 | Module A | Facilities & Assets Catalogue |
 | Member 2 | Module B | Booking Management |
 | Member 3 | Module C | Maintenance & Incident Ticketing |
-| **Member 4 (You)** | **Module D + E** | **Notifications + OAuth2 + Role Management** |
+| Member 4 | Module D + E | Notifications + OAuth2 + Role Management |
 
 ---
 
@@ -175,6 +175,7 @@ PAF_Proj/
 │   │   ├── auth/              # OAuth2, JWT, controllers
 │   │   ├── user/              # User model, service, controller
 │   │   ├── notification/      # Notification model, service, controller
+│   │   ├── resource/          # Module A - facilities and assets catalogue
 │   │   └── config/            # Security, JWT filter, CORS, exception handler
 │   └── src/test/              # Unit tests
 │
@@ -183,7 +184,7 @@ PAF_Proj/
 │       ├── api/               # Axios API calls
 │       ├── context/           # Auth + Notification providers
 │       ├── components/        # Navbar, NotificationPanel, ProtectedRoute
-│       ├── pages/             # Login, Dashboard, Profile, Notifications, Admin
+│       ├── pages/             # Login, Dashboard, Profile, Notifications, Admin, Resources
 │       └── utils/             # Date helpers
 │
 └── .github/workflows/ci.yml   # GitHub Actions CI/CD
