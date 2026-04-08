@@ -9,6 +9,7 @@ import DashboardPage from './pages/dashboard/DashboardPage';
 import ProfilePage from './pages/dashboard/ProfilePage';
 import NotificationsPage from './pages/notifications/NotificationsPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
+import ResourcesPage from './pages/resources/ResourcesPage';
 import { useAuth } from './context/AuthContext';
 
 const AppLayout = ({ children }) => {
@@ -40,8 +41,10 @@ const App = () => {
               {/* Admin only */}
               <Route path="/admin/users" element={<ProtectedRoute requiredRole="ADMIN"><AdminUsersPage /></ProtectedRoute>} />
 
+              {/* Module A - Facilities Catalogue */}
+              <Route path="/resources" element={<ProtectedRoute><ResourcesPage /></ProtectedRoute>} />
+
               {/* Placeholder routes for other modules */}
-              <Route path="/resources/*" element={<ProtectedRoute><PlaceholderPage title="Resources" icon="🏢" /></ProtectedRoute>} />
               <Route path="/bookings/*" element={<ProtectedRoute><PlaceholderPage title="Bookings" icon="📅" /></ProtectedRoute>} />
               <Route path="/tickets/*" element={<ProtectedRoute><PlaceholderPage title="Tickets" icon="🔧" /></ProtectedRoute>} />
 

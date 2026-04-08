@@ -610,6 +610,83 @@ input, select, textarea { font-family: inherit; }
 .btn-sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
 
 /* ================================
+   RESOURCES PAGE
+================================ */
+.resource-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.resource-filter-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.65rem;
+  justify-content: flex-end;
+}
+
+.resource-input,
+.resource-textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.9rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.resource-input:focus,
+.resource-textarea:focus {
+  border-color: var(--primary);
+}
+
+.resource-textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.resource-error {
+  margin-bottom: 1rem;
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #fca5a5;
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+
+.resource-name-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resource-description {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.resource-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.resource-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(120px, 1fr));
+  gap: 0.8rem;
+}
+
+/* ================================
    MISCELLANEOUS
 ================================ */
 .stat-chip {
@@ -656,4 +733,8 @@ input, select, textarea { font-family: inherit; }
   .notif-panel { width: calc(100vw - 2rem); right: -80px; }
   .data-table { font-size: 0.82rem; }
   .data-table th, .data-table td { padding: 0.65rem 0.75rem; }
+  .resource-filters { grid-template-columns: 1fr; }
+  .resource-grid-2,
+  .resource-grid-3 { grid-template-columns: 1fr; }
+  .resource-filter-actions { justify-content: stretch; }
 }
