@@ -52,6 +52,7 @@ public class SecurityConfig {
                 .antMatchers("/api/users/me/**").authenticated()
                 .antMatchers("/api/notifications/**").authenticated()
                 // Admin only
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/users/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/api/**").hasAnyRole("ADMIN", "MANAGER")
                 // Everything else needs authentication
