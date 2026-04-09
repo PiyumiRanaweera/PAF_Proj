@@ -25,12 +25,12 @@ const NewTicketModal = ({ isOpen, onClose, onSubmit }) => {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal" onClick={e => e.stopPropagation()}>
-        <div className="modal-header">
+        <div className="modal-header" style={{ padding: '1rem 1.5rem' }}>
           <h2 className="modal-title">Create New Ticket</h2>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="modal-body">
+          <div className="modal-body" style={{ padding: '1rem 1.5rem', gap: '0.75rem' }}>
             <div className="form-group">
               <label className="form-label">Subject</label>
               <input
@@ -81,7 +81,7 @@ const NewTicketModal = ({ isOpen, onClose, onSubmit }) => {
                 name="description"
                 required
                 className="premium-input"
-                rows="4"
+                rows="3"
                 placeholder="Provide detailed information..."
                 value={formData.description}
                 onChange={handleChange}
@@ -89,7 +89,7 @@ const NewTicketModal = ({ isOpen, onClose, onSubmit }) => {
               />
             </div>
           </div>
-          <div className="modal-footer">
+          <div className="modal-footer" style={{ padding: '0.75rem 1.5rem' }}>
             <button type="button" className="btn btn-secondary" onClick={onClose}>Cancel</button>
             <button type="submit" className="btn btn-primary">Submit Ticket</button>
           </div>
