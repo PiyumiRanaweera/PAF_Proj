@@ -13,7 +13,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 | Member 1 | Module A | Facilities & Assets Catalogue |
 | Member 2 | Module B | Booking Management |
 | Member 3 | Module C | Maintenance & Incident Ticketing |
-| **Member 4 (You)** | **Module D + E** | **Notifications + OAuth2 + Role Management** |
+| **Piyumi Ranaweera** | **Module D + E** | **Notifications + OAuth2 + Role Management** |
 
 ---
 
@@ -44,8 +44,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_ORG/it3030-paf-2026-smart-campus-groupXX.git
-   cd smart-campus-api
+   git clone https://github.com/PiyumiRanaweera/smart-campus-hub.git
    ```
 
 2. **Configure environment variables** — copy `.env.example` to `.env` and fill in:
@@ -90,7 +89,7 @@ A full-stack web platform for managing university facility bookings, maintenance
 
 ---
 
-## 🔌 Member 4 – API Endpoints
+## 🔌 Piyumi Ranaweera – API Endpoints
 
 ### Authentication
 | Method | Endpoint | Description | Auth |
